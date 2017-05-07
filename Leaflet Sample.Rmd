@@ -1,0 +1,26 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+```
+
+## Mapping Cluster around LA region
+
+Map generated on `r Sys.Date()`
+```{r}
+library(leaflet)
+```
+
+The cluster map is the one which i feel we might be using in a large extent.I have seen this in craiglist and in many other sites. So I will use that as my sample map. I have also used an icon to show each place.
+
+```{r}
+LA_Coord <- data.frame(lat = runif(100, min = 33.500, max = 34.50),
+                 lng = runif(100, min = -118.50, max = -117.50))
+LAIcon <- makeIcon(
+  iconUrl = "http://res.cloudinary.com/hrscywv4p/image/upload/c_limit,fl_lossy,h_1440,w_720,f_auto,q_auto/v1/72737/La_Belle_Assiette_Symbol_-_Color_-_Transparent_wmrbpk.png",
+  iconWidth = 31*215/230, iconHeight = 31,
+  iconAnchorX = 31*215/230/2, iconAnchorY = 20
+)
+LA_Coord %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(clusterOptions = markerClusterOptions(), icon = LAIcon)
+```
